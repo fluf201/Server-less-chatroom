@@ -11,6 +11,8 @@
         .message { margin-bottom: 10px; }
         .message strong { margin-right: 10px; }
         .message em { font-size: 0.9em; color: gray; }
+        #key-container { margin-top: 20px; }
+        #key-input { width: 100%; }
     </style>
 </head>
 <body>
@@ -29,6 +31,12 @@
     <div id="chat-log">
         <h2>Chat Log</h2>
         <div id="messages"></div>
+    </div>
+    <div id="key-container">
+        <h2>Chat Key</h2>
+        <textarea id="key-input" readonly></textarea>
+        <button onclick="copyKey()">Copy Key</button>
+        <button onclick="pasteKey()">Load Messages from Key</button>
     </div>
     <script>
         function encodeBase64(message) {
@@ -56,6 +64,7 @@
                 localStorage.setItem(chatKey, JSON.stringify(chatMessages));
                 messageInput.value = '';
                 displayMessages();
+                updateKey();
             }
         }
 
@@ -74,7 +83,39 @@
             });
         }
 
-        window.onload = displayMessages;
+        function updateKey() {
+            const chatKey = 'chatMessages';
+            const chatMessages = JSON.parse(localStorage.getItem(chatKey)) || [];
+            const keyInput = document.getElementById('key-input');
+            const encodedKey = encodeBase64(JSON.stringify(chatMessages));
+            keyInput.value = encodedKey;
+        }
+
+        function copyKey() {
+            const keyInput = document.getElementById('key-input');
+            keyInput.select();
+            document.execCommand('copy');
+        }
+
+        function pasteKey() {
+            const encodedKey = prompt('Paste your key here:');
+            if (encodedKey) {
+                try {
+                    const decodedKey = decodeBase64(encodedKey);
+                    const chatMessages = JSON.parse(decodedKey);
+                    localStorage.setItem('chatMessages', JSON.stringify(chatMessages));
+                    displayMessages();
+                    updateKey();
+                } catch (error) {
+                    alert('Invalid key');
+                }
+            }
+        }
+
+        window.onload = () => {
+            displayMessages();
+            updateKey();
+        };
     </script>
 </body>
 </html>
