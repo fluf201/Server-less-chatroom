@@ -34,48 +34,6 @@
             margin-bottom: 10px;
             border: 1px solid #ccc;
         }
-        #start-session, #generate-key, #send {
-            width: 100%;
-            padding: 10px;
-            background: #007bff;
-            border: none;
-            color: white;
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Key-Based Chatroom</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f2f2f2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .chat-container {
-            background: #fff;
-            border: 1px solid #ccc;
-            padding: 20px;
-            width: 300px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        #chat-window {
-            border: 1px solid #ccc;
-            height: 200px;
-            overflow-y: scroll;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-        #session-key, #message, #user-select {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-        }
         #start-session, #send {
             width: 100%;
             padding: 10px;
@@ -172,63 +130,6 @@
 
             // Automatically generate a session key on page load
             initSession();
-        });
-    </script>
-</body>
-</html>
-            cursor: pointer;
-        }
-        #start-session:hover, #generate-key:hover, #send:hover {
-            background: #0056b3;
-        }
-    </style>
-</head>
-<body>
-    <div class="chat-container">
-        <div id="chat-window">
-            <div id="output"></div>
-        </div>
-        <input type="text" id="session-key" placeholder="Enter or generate session key">
-        <button id="generate-key">Generate Key</button>
-        <button id="start-session">Start Session</button>
-        <select id="user-select">
-            <option value="User 1">User 1</option>
-            <option value="User 2">User 2</option>
-        </select>
-        <input type="text" id="message" placeholder="Enter message">
-        <button id="send">Send</button>
-    </div>
-    <script>
-        let sessionKey = '';
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const output = document.getElementById('output');
-            const generateKeyButton = document.getElementById('generate-key');
-            const startSessionButton = document.getElementById('start-session');
-            const sendButton = document.getElementById('send');
-            const sessionKeyInput = document.getElementById('session-key');
-            const messageInput = document.getElementById('message');
-            const userSelect = document.getElementById('user-select');
-
-            function generateKey() {
-                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-                let key = '';
-                for (let i = 0; i < 10; i++) {
-r('click', () => {
-                sessionKey = sessionKeyInput.value.trim();
-                if (sessionKey) {
-                    loadMessages();
-                }
-            });
-
-            sendButton.addEventListener('click', () => {
-                const message = messageInput.value.trim();
-                const user = userSelect.value;
-                if (sessionKey && message) {
-                    saveMessage(user, message);
-                    messageInput.value = '';
-                }
-            });
         });
     </script>
 </body>
